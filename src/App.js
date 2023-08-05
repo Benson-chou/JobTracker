@@ -1,27 +1,27 @@
 import './App.css';
 import React, { useState, useRef, useEffect } from 'react';
-import TodoList from './TodoList'
+import CompanyList from './CompanyList'
 import { v4 as uuidv4 } from "uuid";
 // const uuidv4 = require('uuid');
 
-const LOCAL_STORAGE_KEY = 'todoApp.todos'
+const LOCAL_STORAGE_KEY = 'companyApp.companies'
 function App() {
   if (JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) === null) {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([]))
   }
-  const [todos, setTodos] = useState(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)))
-  const todoNameRef = useRef()
+  const [companies, setcompanies] = useState(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)))
+  const companyNameRef = useRef()
 
   
   useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos))
-  }, [todos])
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(companies))
+  }, [companies])
 
-  function toggleTodo(id) {
-    const newTodos = [...todos]
-    const todo = newTodos.find(todo => todo.id === id)
-    todo.complete = !todo.complete
-    setTodos(newTodos)
+  function toggleCompany(id) {
+    const newcompanies = [...companies]
+    const company = newcompanies.find(company => company.id === id)
+    company.complete = !company.complete
+    setcompanies(newcompanies)
   }
 
   function isValidLink(link) {
@@ -39,32 +39,32 @@ function App() {
     return match ? match[1] : null;
   }
 
-  function handleAddTodo(e) {
-    const url = todoNameRef.current.value
+  function handleAddCompany(e) {
+    const url = companyNameRef.current.value
     if (url === '') return
     if (!isValidLink(url)) {
-      todoNameRef.current.value = null
+      companyNameRef.current.value = null
       return window.alert("Please enter a valid URL")
   
   }
     const name = getWordAfterWWW(url)
-    setTodos(prevTodos => {
-      return [...prevTodos, {id: uuidv4(), url: url, name: name, complete: false}]
+    setcompanies(prevcompanies => {
+      return [...prevcompanies, {id: uuidv4(), url: url, name: name, complete: false}]
     })
-    todoNameRef.current.value = null
+    companyNameRef.current.value = null
   }
 
-  function handleClearTodos() {
-    const newTodos = todos.filter(todo => !todo.complete)
-    setTodos(newTodos)
+  function handleClearcompanies() {
+    const newcompanies = companies.filter(company => !company.complete)
+    setcompanies(newcompanies)
   }
-  // console.log(todos)
+  // console.log(companies)
     return (
       <>
-      <TodoList todos={todos} toggleTodo={toggleTodo} />
-      <input ref={todoNameRef} type="text" />
-      <button onClick={handleAddTodo}>Add Todo</button>
-      <button onClick={handleClearTodos}>Clear Complete</button>
+      <CompanyList companies={companies} toggleCompany={toggleCompany} />
+      <input ref={companyNameRef} type="text" />
+      <button onClick={handleAddCompany}>Add Company</button>
+      <button onClick={handleClearcompanies}>Clear Complete</button>
     </>
     );
 }
