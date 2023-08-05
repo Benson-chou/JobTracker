@@ -26,7 +26,7 @@ export default function CompanyList({companies, toggleCompany}) {
             />
           </td>
           <td style={{ padding: "8px" }}>
-            <a href={company.url}>{company.name}</a>
+            <a href={company.url} target="_blank" rel="noreferrer" >{company.name}</a>
           </td>
           <td style={{ padding: "8px" }}>
             {company.complete ? "Complete" : "Incomplete"}
