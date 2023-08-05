@@ -6,14 +6,10 @@ import { v4 as uuidv4 } from "uuid";
 
 const LOCAL_STORAGE_KEY = 'todoApp.todos'
 function App() {
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)))
   const todoNameRef = useRef()
 
-  useEffect(() => {
-    const storedTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
-    if (storedTodos) setTodos(storedTodos)
-  }, [])
-
+  
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos))
   }, [todos])
@@ -38,6 +34,7 @@ function App() {
     const newTodos = todos.filter(todo => !todo.complete)
     setTodos(newTodos)
   }
+  // console.log(todos)
     return (
       <>
       <TodoList todos={todos} toggleTodo={toggleTodo} />
