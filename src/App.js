@@ -11,11 +11,18 @@ function App() {
   }
   const [companies, setcompanies] = useState(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)))
   const companyNameRef = useRef()
+  const [editMode, setEditMode] = useState(false)
+
 
   
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(companies))
   }, [companies])
+
+  // Enter edit mode and 
+  function handleEditClick(){
+    setEditMode(!editMode);
+  }
 
   function toggleCompany(id) {
     const newcompanies = [...companies]
@@ -53,18 +60,23 @@ function App() {
     })
     companyNameRef.current.value = null
   }
-
+  
+  // Clear complete companies, close edit Mode and clear mode.
   function handleClearcompanies() {
     const newcompanies = companies.filter(company => !company.complete)
     setcompanies(newcompanies)
+    setEditMode(false);
   }
-  // console.log(companies)
+  
     return (
-      <>
-      <CompanyList companies={companies} toggleCompany={toggleCompany} />
+    <>
+      <CompanyList companies={companies} toggleCompany={toggleCompany} editMode={editMode}/>
       <input ref={companyNameRef} type="text" />
       <button onClick={handleAddCompany}>Add Company</button>
-      <button onClick={handleClearcompanies}>Clear Complete</button>
+      <button onClick={handleEditClick}>
+        {editMode ? 'Save' : 'Edit'}
+      </button>
+      {editMode && <button onClick={handleClearcompanies}>Clear Complete</button>}
     </>
     );
 }

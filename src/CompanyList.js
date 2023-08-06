@@ -1,7 +1,7 @@
 import React from 'react'
 // import Companies from './Companies'
 
-export default function CompanyList({companies, toggleCompany}) {
+export default function CompanyList({companies, toggleCompany, editMode}) {
   function handleCompanyClick(id) {
     toggleCompany(id)
   }
@@ -19,17 +19,18 @@ export default function CompanyList({companies, toggleCompany}) {
         {companies.map(company => (
           <tr key={company.id} style={{ borderBottom: "1px solid #000" }}>
           <td style={{ padding: "8px" }}>
-            <input
+            {editMode && (<input
               type="checkbox"
               checked={company.complete}
               onChange={() => handleCompanyClick(company.id)}
             />
+            )}
           </td>
           <td style={{ padding: "8px" }}>
             <a href={company.url} target="_blank" rel="noreferrer" >{company.name}</a>
           </td>
           <td style={{ padding: "8px" }}>
-            {company.complete ? "Complete" : "Incomplete"}
+            {company.complete ? "Found" : "Still Unvailable"}
           </td>
         </tr>
         ))}
