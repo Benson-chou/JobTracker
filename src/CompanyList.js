@@ -21,7 +21,7 @@ export default function CompanyList({companies, toggleCompany, editMode}) {
           <td style={{ padding: "8px" }}>
             {editMode && (<input
               type="checkbox"
-              checked={company.complete}
+              checked={company.clear}
               onChange={() => handleCompanyClick(company.id)}
             />
             )}
