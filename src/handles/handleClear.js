@@ -1,21 +1,17 @@
 import { collection, where, getDocs, query, deleteDoc} from "@firebase/firestore"
 import { db } from "../firebase_setup/firebase"
 
-const handleClear = async (id) => {
+const handleClear = async (email, url) => {
     // var jobs_query = db.collection("jobDescrip").where("link", "==", url)
-    const jobs = collection(db, "jobDescrip")
-    const q = query(jobs, where("id", "==", id))
+    const requests = collection(db, "requests")
+    const q3 = query(requests, where("UserID", "==", email), 
+                                 where("JobID", "==", url))
     try {
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(q3);
             querySnapshot.forEach((doc) => {
                 deleteDoc(doc.ref)
             })
-        // jobs.where("link", "==", url).get()
-        //     .then((querySnapshot) => {
-        //         querySnapshot.forEach((doc) => {
-        //             doc.ref.delete()
-        //         })
-        //     })
+
     } catch(err) {
         console.log(err)
     }
