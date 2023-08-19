@@ -13,6 +13,7 @@ function Listpage() {
 
   const [companies, setcompanies] = useState([])
   const companyNameRef = useRef()
+  const roleRef = useRef()
   const [editMode, setEditMode] = useState(false)
 
   // Set companies to companies from database
@@ -31,7 +32,7 @@ function Listpage() {
             jobUrlSnapshot.forEach(async jobDocSnapshot =>{
                 var id = uuidv4()
                 setcompanies(prevcompanies => {
-                    return [...prevcompanies, {id: id, url: jobDocSnapshot.data().link, name: jobDocSnapshot.data().name, complete: jobDocSnapshot.data().description, clear: false}]
+                    return [...prevcompanies, {id: id, url: jobDocSnapshot.data().link, name: jobDocSnapshot.data().name, role: jobDocSnapshot.data().role, complete: jobDocSnapshot.data().description, clear: false}]
                 })
             })
             })
@@ -79,7 +80,8 @@ function Listpage() {
   // Add a company to the list
   function handleAddCompany(e) {
     const url = companyNameRef.current.value.trim()
-    if (url === '') return
+    const role = roleRef.current.value.trim()
+    if (url === '' || role === '') return
     if (!isValidLink(url)) {
       companyNameRef.current.value = null
       return window.alert("Please enter a valid URL")
@@ -87,11 +89,12 @@ function Listpage() {
     const name = getWordAfterWWW(url)
     var id = uuidv4()
     setcompanies(prevcompanies => {
-      return [...prevcompanies, {id: id, url: url, name: name, complete: false, clear: false}]
+      return [...prevcompanies, {id: id, url: url, name: name, role: role, complete: false, clear: false}]
     })
     
-    handleSave(url, name, user.email)
+    handleSave(url, name, user.email, role)
     companyNameRef.current.value = null
+    roleRef.current.value = null
   }
   
   // Clear complete companies, close edit Mode and clear mode.
@@ -100,7 +103,7 @@ function Listpage() {
     const removecompanies = companies.filter(company => company.clear)
     setcompanies(newcompanies)
     removecompanies.forEach(company => {
-      handleClear(user.email, company.url)
+      handleClear(user.email, company.url, company.role)
     })
     setEditMode(false)
   }
@@ -118,6 +121,7 @@ function Listpage() {
       <p> Hello, {user?.displayName}</p>
       <CompanyList companies={companies} toggleCompany={toggleCompany} editMode={editMode}/>
       <input ref={companyNameRef} type="text" placeholder='Insert Job URL'/>
+      <input ref={roleRef} type="text" placeholder='Insert Role'/>
       <button onClick={handleAddCompany}>Add Company</button>
       <button onClick={handleEditClick}>
         {editMode ? 'Save' : 'Edit'}

@@ -12,6 +12,7 @@ export default function CompanyList({companies, toggleCompany, editMode}) {
         <tr style={{ borderBottom: "1px solid #000" }}>
           <th style={{ padding: "8px", textAlign: "left" }}></th>
           <th style={{ padding: "8px", textAlign: "left" }}>Name</th>
+          <th style={{ padding: "8px", textAlign: "left" }}>Role</th>
           <th style={{ padding: "8px", textAlign: "left" }}>Status</th>
         </tr>
       </thead>
@@ -29,6 +30,7 @@ export default function CompanyList({companies, toggleCompany, editMode}) {
           <td style={{ padding: "8px" }}>
             <a href={company.url} target="_blank" rel="noreferrer" >{company.name}</a>
           </td>
+          <td style={{ padding: "8px" }}>{company.role}</td>
           <td style={{ padding: "8px" }}>
             {company.complete ? "Found" : "Still Unvailable"}
           </td>
