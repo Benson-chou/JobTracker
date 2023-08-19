@@ -1,0 +1,11 @@
+{
+  "name": "First Chrome Extension",
+  "description": "This is a First Chrome Extension",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "author": "Author Name",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions":["identity", "identity.email"]
+}
