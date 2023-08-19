@@ -10,7 +10,6 @@ import { db } from "../firebase_setup/firebase"
 
 function Listpage() {
   const {user, logOut} = UserAuth()
-
   const [companies, setcompanies] = useState([])
   const companyNameRef = useRef()
   const roleRef = useRef()
@@ -19,20 +18,26 @@ function Listpage() {
   // Set companies to companies from database
   useEffect(()=>{
     if (user){
+        console.log(user.email)
         const requests = collection(db, "requests")
         const jobs = collection(db, "jobDescrip")
 
         const fetchData = async () => {
             const querySnapshot = await getDocs(query(requests, where("UserID", "==", user.email)))
+
             querySnapshot.forEach(async docSnapshot => {
                 const jobUrl = docSnapshot.data().JobID
-                const jobUrlQuery = query(jobs, where("link", "==", jobUrl))
+                const role = docSnapshot.data().role
+                const jobUrlQuery = query(jobs, where("link", "==", jobUrl), where("role", "==", role))
                 const jobUrlSnapshot = await getDocs(jobUrlQuery)
 
             jobUrlSnapshot.forEach(async jobDocSnapshot =>{
+                console.log(jobDocSnapshot.data())
                 var id = uuidv4()
                 setcompanies(prevcompanies => {
-                    return [...prevcompanies, {id: id, url: jobDocSnapshot.data().link, name: jobDocSnapshot.data().name, role: jobDocSnapshot.data().role, complete: jobDocSnapshot.data().description, clear: false}]
+                    return [...prevcompanies, {id: id, url: jobDocSnapshot.data().link, 
+                        name: jobDocSnapshot.data().name, role: jobDocSnapshot.data().role, 
+                        complete: jobDocSnapshot.data().description, clear: false}]
                 })
             })
             })
