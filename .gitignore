@@ -11,6 +11,10 @@
 # production
 /build
 
+# credentials
+/src/firebase_setup
+/src/email_credentials.py
+
 # misc
 .DS_Store
 .env.local
