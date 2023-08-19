@@ -10,7 +10,7 @@ function App() {
     <div>
       <AuthContextProvider>
         <Routes>
-          <Route path="/" element={<SignIn />} />
+          <Route exact path="/jobtracker" element={<SignIn />} />
           <Route path="/listpage" element={<Protected><ListPage /></Protected>} />
         </Routes>
       </AuthContextProvider>
