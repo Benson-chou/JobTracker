@@ -1,3 +1,15 @@
+# Job Tracking Website Project
+React Project: Job-tracking web application.
+This is a mini project for learning the basic idea of React, databases, and OAuth3 methods. 
+
+What this app does is you log in with your Google account and you will be taken to a page where it stores all your saved job listings. Simply input the job listing URL and the role name and press save, you will receive an email update as soon as when the interested role has an opening released from the website you inputted. 
+
+Accessable [here](https://benson-chou.github.io/jobtracker/)!
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
